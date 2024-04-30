@@ -1,5 +1,5 @@
 # Adds namespace to all resources.
-namespace: platform-config-operator-system
+namespace: tbd-operators-system
 
 # Value of this field is prepended to the
 # names of all resources, e.g. a deployment named
@@ -9,8 +9,17 @@ namespace: platform-config-operator-system
 namePrefix: platform-config-operator-
 
 # Labels to add to all resources and selectors.
-#commonLabels:
-#  someName: someValue
+commonLabels:
+  app: platform-config-operator
+  app.kubernetes.io/name: platform-config-operator
+  app.kubernetes.io/instance: manager
+  app.kubernetes.io/component: platform-config-operator
+  app.kubernetes.io/version: v0.0.1
+  capabilities.tbd.io/capability: platform-config
+  capabilities.tbd.io/version: v0.0.1
+  capabilities.tbd.io/platform-version: unstable
+  app.kubernetes.io/part-of: platform
+  app.kubernetes.io/managed-by: platform-bootstrapper
 
 bases:
 - ../crd
