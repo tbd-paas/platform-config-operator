@@ -29,9 +29,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	// common imports for subcommands
-	cmdgenerate "github.com/tbd-paas/capabilities-certificates-operator/cmd/platformctl/commands/generate"
+	cmdgenerate "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/generate"
 	// specific imports for workloads
-	v1alpha1platformconfig "github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities/v1alpha1/platformconfig"
+	v1alpha1platformconfig "github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1/platformconfig"
 	//+kubebuilder:scaffold:operator-builder:imports
 )
 

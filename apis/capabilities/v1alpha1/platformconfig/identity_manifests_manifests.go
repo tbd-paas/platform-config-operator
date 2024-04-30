@@ -22,8 +22,8 @@ import (
 
 	"github.com/nukleros/operator-builder-tools/pkg/controller/workload"
 
-	capabilitiesv1alpha1 "github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities/v1alpha1"
-	"github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities/v1alpha1/platformconfig/mutate"
+	capabilitiesv1alpha1 "github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1"
+	"github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1/platformconfig/mutate"
 )
 
 // +kubebuilder:rbac:groups=apiextensions.k8s.io,resources=customresourcedefinitions,verbs=get;list;watch;create;update;patch;delete

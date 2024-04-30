@@ -19,9 +19,9 @@ package capabilities
 import (
 	"github.com/spf13/cobra"
 
-	cmdversion "github.com/tbd-paas/capabilities-certificates-operator/cmd/platformctl/commands/version"
+	cmdversion "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/version"
 
-	"github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities"
+	"github.com/tbd-paas/platform-config-operator/apis/capabilities"
 )
 
 // NewPlatformConfigSubCommand creates a new command and adds it to its

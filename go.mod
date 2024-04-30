@@ -1,4 +1,4 @@
-module github.com/tbd-paas/capabilities-certificates-operator
+module github.com/tbd-paas/platform-config-operator
 
 go 1.22
 

@@ -22,10 +22,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities"
+	"github.com/tbd-paas/platform-config-operator/apis/capabilities"
 
-	v1alpha1platformconfig "github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities/v1alpha1/platformconfig"
-	cmdinit "github.com/tbd-paas/capabilities-certificates-operator/cmd/platformctl/commands/init"
+	v1alpha1platformconfig "github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1/platformconfig"
+	cmdinit "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/init"
 	//+kubebuilder:scaffold:operator-builder:imports
 )
 

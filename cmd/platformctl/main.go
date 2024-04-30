@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"github.com/tbd-paas/capabilities-certificates-operator/cmd/platformctl/commands"
+	"github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands"
 )
 
 func main() {

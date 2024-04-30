@@ -21,7 +21,7 @@ import (
 
 	"github.com/nukleros/operator-builder-tools/pkg/controller/workload"
 
-	capabilitiesv1alpha1 "github.com/tbd-paas/capabilities-certificates-operator/apis/capabilities/v1alpha1"
+	capabilitiesv1alpha1 "github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1"
 )
 
 // MutateCRDIdentitycapabilitiesCapabilitiesPlatformTbdIo mutates the CustomResourceDefinition resource with name identitycapabilities.capabilities.platform.tbd.io.
