@@ -1,0 +1,18 @@
+kind: StandaloneWorkload
+name: platform-config
+spec:
+  api:
+    clusterScoped: true
+    domain: platform.tbd.io
+    group: capabilities
+    kind: PlatformConfig
+    version: v1alpha1
+  companionCliRootcmd:
+    name: platformctl
+    description: Manage the platform configuration
+  resources:
+    # controller deployment
+    - certificates/manifests/manifests.yaml
+    - identity/manifests/manifests.yaml
+
+    # platform configuration resources

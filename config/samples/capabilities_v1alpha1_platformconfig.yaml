@@ -1,0 +1,6 @@
+apiVersion: capabilities.platform.tbd.io/v1alpha1
+kind: PlatformConfig
+metadata:
+  name: platformconfig-sample
+spec:
+  namespace: "tbd-operators-system"
