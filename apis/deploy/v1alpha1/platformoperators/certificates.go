@@ -837,6 +837,7 @@ func CreateRoleNamespaceCertificatesOperatorLeaderElectionRole(
 // +kubebuilder:rbac:groups=certificates.platform.tbd.io,resources=trustmanagers/status,verbs=get;patch;update
 // +kubebuilder:rbac:groups=coordination.k8s.io,resources=leases,verbs=create;get;list;patch;update;watch
 // +kubebuilder:rbac:groups=core,resources=configmaps,verbs=create;delete;get;list;patch;update;watch
+// +kubebuilder:rbac:groups=core,resources=endpoints,verbs=get;list;watch
 // +kubebuilder:rbac:groups=core,resources=events,verbs=create;get;patch;update
 // +kubebuilder:rbac:groups=core,resources=namespaces,verbs=get;list;watch
 // +kubebuilder:rbac:groups=core,resources=pods,verbs=create;delete;get;list;watch
@@ -1339,6 +1340,19 @@ func CreateClusterRoleCertificatesOperatorManagerRole(
 						"list",
 						"patch",
 						"update",
+						"watch",
+					},
+				},
+				map[string]interface{}{
+					"apiGroups": []interface{}{
+						"",
+					},
+					"resources": []interface{}{
+						"endpoints",
+					},
+					"verbs": []interface{}{
+						"get",
+						"list",
 						"watch",
 					},
 				},

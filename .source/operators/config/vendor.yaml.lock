@@ -2,14 +2,14 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'refactor: remove nested fields...'
-      sha: 9ba860704f8cc25a415ed7627ddb1871f6b8414b
+      commitTitle: 'fix: add missing endpoints rbac for checking webhook status...'
+      sha: 1d8f34e2f6ba6c549b3d1d2b16e60c0ef7631df1
     path: .
   path: operators/vendor/certificates
 - contents:
   - git:
-      commitTitle: 'fix: correct copy/paste error path...'
-      sha: ce348d8a8f225de6117d6cc48239dae9d8d8a983
+      commitTitle: 'fix: add missing endpoints rbac for checking webhook status...'
+      sha: f733a7f38be3a45d0a0468505ca315bf95fc0ad2
     path: .
   path: operators/vendor/identity
 kind: LockConfig

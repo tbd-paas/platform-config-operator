@@ -39,7 +39,6 @@ func (r *PlatformOperatorsReconciler) InitializePhases() {
 		phases.CreateResourcesPhase,
 		phases.CreateEvent,
 		phases.WithCustomRequeueResult(ctrl.Result{RequeueAfter: 5 * time.Second}),
-		phases.WithResourceOptions(phases.ResourceOptionWithWait),
 	)
 
 	r.Phases.Register(

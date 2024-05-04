@@ -410,6 +410,7 @@ func CreateRoleNamespaceIdentityOperatorLeaderElectionRole(
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=create;delete;get;list;patch;update;watch
 // +kubebuilder:rbac:groups=cert-manager.io,resources=certificates,verbs=create;delete;get;list;patch;update;watch
 // +kubebuilder:rbac:groups=certificates.k8s.io,resources=certificatesigningrequests,verbs=create;get;list;watch
+// +kubebuilder:rbac:groups=core,resources=endpoints,verbs=get;list;watch
 // +kubebuilder:rbac:groups=core,resources=events,verbs=create;get;patch;update
 // +kubebuilder:rbac:groups=core,resources=namespaces,verbs=list;watch
 // +kubebuilder:rbac:groups=core,resources=secrets,verbs=create;get;patch;update
@@ -508,6 +509,19 @@ func CreateClusterRoleIdentityOperatorManagerRole(
 					},
 					"verbs": []interface{}{
 						"create",
+						"get",
+						"list",
+						"watch",
+					},
+				},
+				map[string]interface{}{
+					"apiGroups": []interface{}{
+						"",
+					},
+					"resources": []interface{}{
+						"endpoints",
+					},
+					"verbs": []interface{}{
 						"get",
 						"list",
 						"watch",
