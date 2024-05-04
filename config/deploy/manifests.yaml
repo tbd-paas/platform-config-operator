@@ -2,20 +2,36 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    app.kubernetes.io/component: manager
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: system
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: namespace
-    app.kubernetes.io/part-of: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
     control-plane: controller-manager
-  name: platform-config-operator-system
+  name: tbd-operators-system
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
+  labels:
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
   name: platformconfigs.deploy.platform.tbd.io
 spec:
   group: deploy.platform.tbd.io
@@ -181,6 +197,17 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
+  labels:
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
   name: platformoperators.deploy.platform.tbd.io
 spec:
   group: deploy.platform.tbd.io
@@ -311,27 +338,37 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app.kubernetes.io/component: rbac
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: controller-manager
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: serviceaccount
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-controller-manager
-  namespace: platform-config-operator-system
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatorcontroller-manager
+  namespace: tbd-operators-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
-    app.kubernetes.io/component: rbac
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: leader-election-role
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: role
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-leader-election-role
-  namespace: platform-config-operator-system
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatorleader-election-role
+  namespace: tbd-operators-system
 rules:
 - apiGroups:
   - ""
@@ -368,7 +405,18 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: platform-config-operator-manager-role
+  labels:
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatormanager-role
 rules:
 - nonResourceURLs:
   - /metrics
@@ -943,13 +991,18 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/component: kube-rbac-proxy
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: metrics-reader
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-metrics-reader
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatormetrics-reader
 rules:
 - nonResourceURLs:
   - /metrics
@@ -960,13 +1013,18 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/component: kube-rbac-proxy
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: proxy-role
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-proxy-role
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatorproxy-role
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -985,76 +1043,96 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-    app.kubernetes.io/component: rbac
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: leader-election-rolebinding
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: rolebinding
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-leader-election-rolebinding
-  namespace: platform-config-operator-system
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatorleader-election-rolebinding
+  namespace: tbd-operators-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: platform-config-operator-leader-election-role
+  name: platform-config-operatorleader-election-role
 subjects:
 - kind: ServiceAccount
-  name: platform-config-operator-controller-manager
-  namespace: platform-config-operator-system
+  name: platform-config-operatorcontroller-manager
+  namespace: tbd-operators-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    app.kubernetes.io/component: rbac
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: manager-rolebinding
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: clusterrolebinding
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-manager-rolebinding
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatormanager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: platform-config-operator-manager-role
+  name: platform-config-operatormanager-role
 subjects:
 - kind: ServiceAccount
-  name: platform-config-operator-controller-manager
-  namespace: platform-config-operator-system
+  name: platform-config-operatorcontroller-manager
+  namespace: tbd-operators-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    app.kubernetes.io/component: kube-rbac-proxy
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: proxy-rolebinding
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: clusterrolebinding
-    app.kubernetes.io/part-of: platform-config-operator
-  name: platform-config-operator-proxy-rolebinding
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
+  name: platform-config-operatorproxy-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: platform-config-operator-proxy-role
+  name: platform-config-operatorproxy-role
 subjects:
 - kind: ServiceAccount
-  name: platform-config-operator-controller-manager
-  namespace: platform-config-operator-system
+  name: platform-config-operatorcontroller-manager
+  namespace: tbd-operators-system
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/component: kube-rbac-proxy
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: controller-manager-metrics-service
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: service
-    app.kubernetes.io/part-of: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
     control-plane: controller-manager
-  name: platform-config-operator-controller-manager-metrics-service
-  namespace: platform-config-operator-system
+  name: platform-config-operatorcontroller-manager-metrics-service
+  namespace: tbd-operators-system
 spec:
   ports:
   - name: https
@@ -1062,49 +1140,80 @@ spec:
     protocol: TCP
     targetPort: https
   selector:
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
     control-plane: controller-manager
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/component: manager
+    app: platform-config-operator
+    app.kubernetes.io/component: platform-config-operator
     app.kubernetes.io/created-by: platform-config-operator
-    app.kubernetes.io/instance: controller-manager
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: deployment
-    app.kubernetes.io/part-of: platform-config-operator
+    app.kubernetes.io/instance: manager
+    app.kubernetes.io/managed-by: platform-bootstrapper
+    app.kubernetes.io/name: platform-config-operator
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/version: v0.0.1
+    capabilities.tbd.io/capability: platform-config-operator
+    capabilities.tbd.io/platform-version: unstable
+    capabilities.tbd.io/version: v0.0.1
     control-plane: controller-manager
-  name: platform-config-operator-controller-manager
-  namespace: platform-config-operator-system
+  name: platform-config-operatorcontroller-manager
+  namespace: tbd-operators-system
 spec:
   replicas: 1
   selector:
     matchLabels:
+      app: platform-config-operator
+      app.kubernetes.io/component: platform-config-operator
+      app.kubernetes.io/instance: manager
+      app.kubernetes.io/managed-by: platform-bootstrapper
+      app.kubernetes.io/name: platform-config-operator
+      app.kubernetes.io/part-of: platform
+      app.kubernetes.io/version: v0.0.1
+      capabilities.tbd.io/capability: platform-config-operator
+      capabilities.tbd.io/platform-version: unstable
+      capabilities.tbd.io/version: v0.0.1
       control-plane: controller-manager
   template:
     metadata:
       annotations:
         kubectl.kubernetes.io/default-container: manager
       labels:
+        app: platform-config-operator
+        app.kubernetes.io/component: platform-config-operator
+        app.kubernetes.io/instance: manager
+        app.kubernetes.io/managed-by: platform-bootstrapper
+        app.kubernetes.io/name: platform-config-operator
+        app.kubernetes.io/part-of: platform
+        app.kubernetes.io/version: v0.0.1
+        capabilities.tbd.io/capability: platform-config-operator
+        capabilities.tbd.io/platform-version: unstable
+        capabilities.tbd.io/version: v0.0.1
         control-plane: controller-manager
     spec:
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-                - arm64
-                - ppc64le
-                - s390x
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - platform-config-operator
+              topologyKey: kubernetes.io/hostname
+            weight: 100
       containers:
       - args:
         - --secure-listen-address=0.0.0.0:8443
@@ -1119,16 +1228,16 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: 500m
-            memory: 128Mi
+            memory: 64Mi
           requests:
             cpu: 5m
-            memory: 64Mi
+            memory: 16Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
             - ALL
+          readOnlyRootFilesystem: true
       - args:
         - --health-probe-bind-address=:8081
         - --metrics-bind-address=127.0.0.1:8080
@@ -1151,17 +1260,25 @@ spec:
           periodSeconds: 10
         resources:
           limits:
-            cpu: 500m
-            memory: 128Mi
+            cpu: 125m
+            memory: 64Mi
           requests:
             cpu: 10m
-            memory: 64Mi
+            memory: 16Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
             - ALL
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        kubernetes.io/arch: arm64
+        kubernetes.io/os: linux
+        tbd.io/node-type: platform
       securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
         runAsNonRoot: true
-      serviceAccountName: platform-config-operator-controller-manager
+        runAsUser: 1001
+      serviceAccountName: platform-config-operatorcontroller-manager
       terminationGracePeriodSeconds: 10
