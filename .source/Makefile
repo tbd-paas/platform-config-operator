@@ -26,8 +26,8 @@ MANAGED_ASSETS=../go.mod \
 	../.dockerignore \
 	../config/default/kustomization.yaml \
 	../config/default/manager_auth_proxy_patch.yaml \
-	../conrollers/deploy/platformconfig_phases.go \
-	../controller/deploy/platformoperators_phases.go
+	../controllers/deploy/platformconfig_phases.go \
+	../controllers/deploy/platformoperators_phases.go
 
 # preserve manually mananged assets
 preserve:
