@@ -3,26 +3,31 @@ VERSION ?= latest
 #
 # code generation
 #
-INIT_OPTS=init \
-	--workload-config .source/workload.yaml \
-   	--repo github.com/tbd-paas/platform-config-operator \
-	--controller-image quay.io/tbd-paas/platform-config-operator:$(VERSION) \
-    --skip-go-version-check
+WORKLOAD_CONFIG ?= .source/workload-operators.yaml
+define operator_builder_init
+	operator-builder init \
+		--workload-config $(WORKLOAD_CONFIG) \
+		--repo github.com/tbd-paas/platform-config-operator \
+		--controller-image quay.io/tbd-paas/platform-config-operator:$(VERSION) \
+		--skip-go-version-check
+endef
 
-CREATE_OPTS=create api \
-	--workload-config .source/workload.yaml \
-	--controller \
-	--resource \
-	--force
+define operator_builder_create
+	operator-builder create api \
+		--workload-config $1 \
+		--controller \
+		--resource \
+		--force
+endef
 
-MANAGED_ASSETS=../config/install \
+MANAGED_ASSETS=../go.mod \
 	../README.md \
-	../Makefile \
-	../Dockerfile \
-	../go.mod \
-	../controllers/capabilities/certificatescapability_phases.go \
-	../phases \
-	../.gitignore
+	../.gitignore \
+	../.dockerignore \
+	../config/default/kustomization.yaml \
+	../config/default/manager_auth_proxy_patch.yaml \
+	../conrollers/deploy/platformconfig_phases.go \
+	../controller/deploy/platformoperators_phases.go
 
 # preserve manually mananged assets
 preserve:
@@ -48,13 +53,20 @@ restore:
 	@cp -R assets/* ..
 
 operator-clean: preserve
-	rm -rf ../*
+	sudo rm -rf ../bin && rm -rf ../*
 
 operator-init:
-	cd .. && operator-builder $(INIT_OPTS)
+	cd .. && $(call operator_builder_init)
 
 operator-create:
-	cd .. && operator-builder $(CREATE_OPTS)
+	cd .. && \
+		for workload in $$(find .source -maxdepth 1 -type f -name "workload-*.yaml"); do \
+			$(call operator_builder_create, "$${workload}") ;\
+		done && \
+	make manifests
+
+operator: download-all overlay-all operator-clean operator-init operator-create restore controller-manifests
+	cd ../ && go mod tidy
 
 #
 # project management
@@ -74,10 +86,6 @@ download:
 download-all:
 	@for project in $$(find . -maxdepth 1 -type d ! -name "assets" ! -name "." -exec basename {} \;); do \
 		$(call download, $$project); \
-		if [ -d $$project/vendor-kustomize ]; then \
-			mkdir -p $$project/vendor ;\
-			kustomize build $$project/vendor-kustomize/default > $$project/vendor/manifests.yaml ;\
-		fi ;\
 	done
 
 # overlay changes
@@ -86,7 +94,7 @@ overlay:
 	$(call overlay, $(PROJECT))
 
 overlay-all:
-	for project in $$(find . -maxdepth 1 -type d ! -name "assets" ! -name "." -exec basename {} \;); do \
+	@for project in $$(find . -maxdepth 1 -type d ! -name "assets" ! -name "." -exec basename {} \;); do \
 		$(call overlay, $$project); \
 	done
 

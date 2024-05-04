@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  # +operator-builder:field:name=platform.certificates.namespace,default="tbd-certificates-system",type=string,description=`Namespace where
+  # the capability components will be deployed.`
+  name: tbd-certificates-system
+  labels:
+    capabilities.tbd.io/capability: platform-config
+    capabilities.tbd.io/version: v0.0.1
+    capabilities.tbd.io/platform-version: unstable
+    app.kubernetes.io/version: unstable
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/managed-by: platform-config-operator
+    certificates.platform.tbd.io/inject-ca-bundle: "true"
+  annotations:
+    # +operator-builder:field:name=platform.certificates.deploymentSize,default="small",type=string,description=`Size of the
+    # deployment for the underlying capability.  Must be one of small, medium, or large.
+    # +kubebuilder:validation:Enum:small;medium;large`
+    certificates.platform.tbd.io/deployment-size: small

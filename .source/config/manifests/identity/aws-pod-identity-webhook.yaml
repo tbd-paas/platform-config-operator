@@ -1,0 +1,24 @@
+---
+apiVersion: identity.platform.tbd.io/v1alpha1
+kind: AWSPodIdentityWebhook
+metadata:
+  # +operator-builder:resource:field=cloud.type,value="aws",include
+  # +operator-builder:resource:field=cloud.local,value=true,include
+  name: config
+  labels:
+    capabilities.tbd.io/capability: platform-config
+    capabilities.tbd.io/version: v0.0.1
+    capabilities.tbd.io/platform-version: unstable
+    app.kubernetes.io/version: unstable
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/managed-by: platform-config-operator
+spec:
+  namespace: tbd-identity-system # +operator-builder:field:name=platform.identity.namespace,default="tbd-identity-system",type=string
+  replicas: 2
+  image: amazon/amazon-eks-pod-identity-webhook:v0.5.3
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      memory: 64Mi

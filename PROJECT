@@ -11,7 +11,7 @@ plugins:
     cliRootCommandName: platformctl
     controllerImg: ""
     enableOlm: false
-    workloadConfigPath: .source/workload.yaml
+    workloadConfigPath: .source/workload-config.yaml
 projectName: platform-config-operator
 repo: github.com/tbd-paas/platform-config-operator
 resources:
@@ -20,10 +20,19 @@ resources:
     namespaced: true
   controller: true
   domain: platform.tbd.io
-  group: capabilities
-  kind: PlatformConfig
-  path: github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1
+  group: deploy
+  kind: PlatformOperators
+  path: github.com/tbd-paas/platform-config-operator/apis/deploy/v1alpha1
   version: v1alpha1
 - kind: ""
   version: ""
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: platform.tbd.io
+  group: deploy
+  kind: PlatformConfig
+  path: github.com/tbd-paas/platform-config-operator/apis/deploy/v1alpha1
+  version: v1alpha1
 version: "3"

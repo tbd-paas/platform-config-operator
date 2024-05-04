@@ -1,0 +1,30 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.30.0
+directories:
+  # certificates
+  - path: config/vendor/certificates
+    contents:
+      - path: ./
+        git:
+          url: https://github.com/tbd-paas/capabilities-certificates-operator.git
+          ref: main
+        includePaths:
+          - config/samples/*
+        excludePaths:
+          - config/samples/kustomization.yaml
+        newRootPath: config/samples
+
+  # identity
+  - path: config/vendor/identity
+    contents:
+      - path: ./
+        git:
+          url: https://github.com/tbd-paas/capabilities-identity-operator.git
+          ref: main
+        includePaths:
+          - config/samples/*
+        excludePaths:
+          - config/samples/kustomization.yaml
+        newRootPath: config/samples

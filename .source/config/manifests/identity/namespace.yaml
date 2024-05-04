@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  # +operator-builder:field:name=platform.identity.namespace,default="tbd-identity-system",type=string,description=`Namespace where
+  # the capability components will be deployed.`
+  name: tbd-identity-system
+  labels:
+    capabilities.tbd.io/capability: platform-config
+    capabilities.tbd.io/version: v0.0.1
+    capabilities.tbd.io/platform-version: unstable
+    app.kubernetes.io/version: unstable
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/managed-by: platform-config-operator
+    certificates.platform.tbd.io/inject-ca-bundle: "true"
+  annotations:
+    # +operator-builder:field:name=cloud.type,default="aws",type=string,description=`
+    # +kubebuilder:validation:Enum=aws
+    # Underlying cloud type this platform is deployed upon.  Currently, only AWS is supported.`
+    # +operator-builder:field:name=cloud.local,default=true,type=bool,description=`
+    # Whether this cloud is deployed as a local cloud to use for testing scenarios.`
+    # +operator-builder:field:name=platform.identity.deploymentSize,default="small",type=string,description=`Size of the
+    # +kubebuilder:validation:Enum:small;medium;large
+    # deployment for the underlying capability.  Must be one of small, medium, or large.`
+    identity.platform.tbd.io/deployment-size: small

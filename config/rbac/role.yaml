@@ -131,66 +131,6 @@ rules:
   verbs:
   - create
 - apiGroups:
-  - capabilities.platform.tbd.io
-  resources:
-  - certificatescapabilities
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - capabilities.platform.tbd.io
-  resources:
-  - certificatescapabilities/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - capabilities.platform.tbd.io
-  resources:
-  - identitycapabilities
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - capabilities.platform.tbd.io
-  resources:
-  - identitycapabilities/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - capabilities.platform.tbd.io
-  resources:
-  - platformconfigs
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - capabilities.platform.tbd.io
-  resources:
-  - platformconfigs/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
   - cert-manager.io
   resources:
   - certificaterequests
@@ -311,6 +251,46 @@ rules:
   verbs:
   - sign
 - apiGroups:
+  - certificates.platform.tbd.io
+  resources:
+  - certmanagers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - certificates.platform.tbd.io
+  resources:
+  - certmanagers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - certificates.platform.tbd.io
+  resources:
+  - trustmanagers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - certificates.platform.tbd.io
+  resources:
+  - trustmanagers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - coordination.k8s.io
   resources:
   - leases
@@ -333,14 +313,6 @@ rules:
   - list
   - patch
   - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - endpoints
-  verbs:
-  - get
-  - list
   - watch
 - apiGroups:
   - ""
@@ -410,6 +382,46 @@ rules:
   - update
   - watch
 - apiGroups:
+  - deploy.platform.tbd.io
+  resources:
+  - platformconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - deploy.platform.tbd.io
+  resources:
+  - platformconfigs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - deploy.platform.tbd.io
+  resources:
+  - platformoperators
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - deploy.platform.tbd.io
+  resources:
+  - platformoperators/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - gateway.networking.k8s.io
   resources:
   - gateways
@@ -439,6 +451,26 @@ rules:
   resources:
   - httproutes/finalizers
   verbs:
+  - update
+- apiGroups:
+  - identity.platform.tbd.io
+  resources:
+  - awspodidentitywebhooks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - identity.platform.tbd.io
+  resources:
+  - awspodidentitywebhooks/status
+  verbs:
+  - get
+  - patch
   - update
 - apiGroups:
   - networking.k8s.io

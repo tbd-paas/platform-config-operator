@@ -1,0 +1,49 @@
+commonOverlays:
+  - name: "add namespace markers"
+    query:
+      - metadata.namespace
+      - subjects[*].namespace
+      - "webhooks[*].clientConfig.service.namespace"
+    value: "{{ .defaultNamespace }}"  # +operator-builder:field:name=namespace,default="{{ .defaultNamespace }}",type=string
+
+  - name: "add labels"
+    query:
+      - metadata.labels
+    action: merge
+    value:
+      capabilities.tbd.io/capability: platform-config
+      capabilities.tbd.io/version: "{{ .operatorVersion }}"
+      capabilities.tbd.io/platform-version: "{{ .platformVersion }}"
+      app.kubernetes.io/version: "{{ .platformVersion }}"
+      app.kubernetes.io/part-of: platform
+      app.kubernetes.io/managed-by: platform-config-operator
+
+  - name: "add labels to pods"
+    query:
+      - spec.template.metadata.labels
+      - spec.selector.matchLabels
+    action: merge
+    onMissing:
+      action: ignore
+    value:
+      capabilities.tbd.io/version: "{{ .operatorVersion }}"
+      capabilities.tbd.io/platform-version: "{{ .platformVersion }}"
+      app.kubernetes.io/version: "{{ .platformVersion }}"
+      app.kubernetes.io/part-of: platform
+      app.kubernetes.io/managed-by: platform-config-operator
+
+  - name: "remove all namespace resources"
+    query: "$"
+    action: delete
+    documentQuery:
+      - conditions:
+          - query: $[?($.kind == "Namespace")]
+
+yamlFiles:
+  - name: "certificate operator manifests"
+    path: "../vendor/certificates/manifests.yaml"
+    outputPath: "manifests/certificates.yaml"
+
+  - name: "identity operator manifests"
+    path: "../vendor/identity/manifests.yaml"
+    outputPath: "manifests/identity.yaml"

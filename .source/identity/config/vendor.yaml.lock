@@ -1,9 +1,0 @@
-apiVersion: vendir.k14s.io/v1alpha1
-directories:
-- contents:
-  - git:
-      commitTitle: 'fix: correct repo hash...'
-      sha: f80e9a73449dbbf9e9ab9fa6ed7c460b582a2939
-    path: .
-  path: identity/vendor
-kind: LockConfig

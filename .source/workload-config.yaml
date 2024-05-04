@@ -1,0 +1,21 @@
+kind: StandaloneWorkload
+name: platform-config
+spec:
+  api:
+    clusterScoped: true
+    domain: platform.tbd.io
+    group: deploy
+    kind: PlatformConfig
+    version: v1alpha1
+  companionCliRootcmd:
+    name: platformctl
+    description: Manage the platform configuration
+  resources:
+    # namespaces
+    - config/manifests/certificates/namespace.yaml
+    - config/manifests/identity/namespace.yaml
+
+    # components
+    - config/manifests/certificates/cert-manager.yaml
+    - config/manifests/certificates/trust-manager.yaml
+    - config/manifests/identity/aws-pod-identity-webhook.yaml

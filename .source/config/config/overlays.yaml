@@ -1,0 +1,102 @@
+commonOverlays:
+  - name: "add labels"
+    query: metadata.labels
+    action: merge
+    onMissing:
+      action: inject
+    value:
+      capabilities.tbd.io/capability: platform-config
+      capabilities.tbd.io/version: "{{ .operatorVersion }}"
+      capabilities.tbd.io/platform-version: "{{ .platformVersion }}"
+      app.kubernetes.io/version: "{{ .platformVersion }}"
+      app.kubernetes.io/part-of: platform
+      app.kubernetes.io/managed-by: platform-config-operator
+
+  - name: "adjust the name to be considered a config resource"
+    documentQuery:
+      - conditions:
+        - query: $[?($.apiVersion =~ /platform\.tbd\.io/)]
+    query: metadata.name
+    value: config
+
+  - name: "add trust bundle ca injection"
+    documentQuery:
+      - conditions:
+        - query: $[?($.kind == "Namespace")]
+    query: metadata.labels
+    value:
+      certificates.platform.tbd.io/inject-ca-bundle: "true"
+    action: merge
+    onMissing:
+      action: inject
+
+yamlFiles:
+  # certificates
+  - name: "certificates namespace"
+    path: "../static/certificates-namespace.yaml"
+    outputPath: "manifests/certificates/namespace.yaml"
+    overlays:
+      - name: "add metadata"
+        query: "metadata"
+        value: 
+          # +operator-builder:field:name=platform.certificates.namespace,default="%v",type=string,description=`Namespace where
+          # the capability components will be deployed.`
+          name: "%v" 
+          annotations:
+            # +operator-builder:field:name=platform.certificates.deploymentSize,default="small",type=string,description=`Size of the
+            # deployment for the underlying capability.  Must be one of small, medium, or large.
+            # +kubebuilder:validation:Enum:small;medium;large`
+            certificates.platform.tbd.io/deployment-size: "small"
+
+  - name: "cert-manager manifests"
+    path: "../vendor/certificates/certificates_v1alpha1_certmanager.yaml"
+    outputPath: "manifests/certificates/cert-manager.yaml"
+    overlays:
+      - name: "ensure namespace field is adjustable"
+        query: spec.namespace
+        value: "%v" # +operator-builder:field:name=platform.certificates.namespace,default="%v",type=string
+
+  - name: "trust-manager manifests"
+    path: "../vendor/certificates/certificates_v1alpha1_trustmanager.yaml"
+    outputPath: "manifests/certificates/trust-manager.yaml"
+    overlays:
+      - name: "ensure namespace field is adjustable"
+        query: spec.namespace
+        value: "%v" # +operator-builder:field:name=platform.certificates.namespace,default="%v",type=string
+
+  # identity
+  - name: "identity namespace"
+    path: "../static/identity-namespace.yaml"
+    outputPath: "manifests/identity/namespace.yaml"
+    overlays:
+      - name: "add metadata"
+        query: "metadata"
+        value: 
+          # +operator-builder:field:name=platform.identity.namespace,default="%v",type=string,description=`Namespace where
+          # the capability components will be deployed.`
+          name: "%v" 
+          annotations:
+            # +operator-builder:field:name=cloud.type,default="aws",type=string,description=`
+            # +kubebuilder:validation:Enum=aws
+            # Underlying cloud type this platform is deployed upon.  Currently, only AWS is supported.`
+            # +operator-builder:field:name=cloud.local,default=true,type=bool,description=`
+            # Whether this cloud is deployed as a local cloud to use for testing scenarios.`
+            # +operator-builder:field:name=platform.identity.deploymentSize,default="small",type=string,description=`Size of the
+            # +kubebuilder:validation:Enum:small;medium;large
+            # deployment for the underlying capability.  Must be one of small, medium, or large.`
+            identity.platform.tbd.io/deployment-size: "small"
+
+  - name: "aws pod identity webhook manifests"
+    path: "../vendor/identity/identity_v1alpha1_awspodidentitywebhook.yaml"
+    outputPath: "manifests/identity/aws-pod-identity-webhook.yaml"
+    overlays:
+      - name: "ensure namespace field is adjustable"
+        query: spec.namespace
+        value: "%v" # +operator-builder:field:name=platform.identity.namespace,default="%v",type=string
+
+      - name: "add an include marker for only aws local deployments"
+        query: metadata
+        value:
+          # +operator-builder:resource:field=cloud.type,value="aws",include
+          # +operator-builder:resource:field=cloud.local,value=true,include
+          name: "%v"

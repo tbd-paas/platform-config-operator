@@ -25,9 +25,9 @@ import (
 	cmdversion "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/version"
 
 	// specific imports for workloads
-	generatecapabilities "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/generate/capabilities"
-	initcapabilities "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/init/capabilities"
-	versioncapabilities "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/version/capabilities"
+	generatedeploy "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/generate/deploy"
+	initdeploy "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/init/deploy"
+	versiondeploy "github.com/tbd-paas/platform-config-operator/cmd/platformctl/commands/version/deploy"
 	//+kubebuilder:scaffold:operator-builder:subcommands:imports
 )
 
@@ -62,7 +62,8 @@ func (c *PlatformctlCommand) newInitSubCommand() {
 	_ = parentCommand
 
 	// add the init subcommands
-	initcapabilities.NewPlatformConfigSubCommand(parentCommand)
+	initdeploy.NewPlatformOperatorsSubCommand(parentCommand)
+	initdeploy.NewPlatformConfigSubCommand(parentCommand)
 	//+kubebuilder:scaffold:operator-builder:subcommands:init
 }
 
@@ -71,7 +72,8 @@ func (c *PlatformctlCommand) newGenerateSubCommand() {
 	_ = parentCommand
 
 	// add the generate subcommands
-	generatecapabilities.NewPlatformConfigSubCommand(parentCommand)
+	generatedeploy.NewPlatformOperatorsSubCommand(parentCommand)
+	generatedeploy.NewPlatformConfigSubCommand(parentCommand)
 	//+kubebuilder:scaffold:operator-builder:subcommands:generate
 }
 
@@ -80,7 +82,8 @@ func (c *PlatformctlCommand) newVersionSubCommand() {
 	_ = parentCommand
 
 	// add the version subcommands
-	versioncapabilities.NewPlatformConfigSubCommand(parentCommand)
+	versiondeploy.NewPlatformOperatorsSubCommand(parentCommand)
+	versiondeploy.NewPlatformConfigSubCommand(parentCommand)
 	//+kubebuilder:scaffold:operator-builder:subcommands:version
 }
 

@@ -1,0 +1,43 @@
+---
+apiVersion: certificates.platform.tbd.io/v1alpha1
+kind: CertManager
+metadata:
+  name: config
+  labels:
+    capabilities.tbd.io/capability: platform-config
+    capabilities.tbd.io/version: v0.0.1
+    capabilities.tbd.io/platform-version: unstable
+    app.kubernetes.io/version: unstable
+    app.kubernetes.io/part-of: platform
+    app.kubernetes.io/managed-by: platform-config-operator
+spec:
+  namespace: tbd-certificates-system # +operator-builder:field:name=platform.certificates.namespace,default="tbd-certificates-system",type=string
+  aws:
+    roleARN: ""
+  injector:
+    replicas: 2
+    image: quay.io/jetstack/cert-manager-cainjector:v1.14.4
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+  controller:
+    replicas: 2
+    image: quay.io/jetstack/cert-manager-controller:v1.14.4
+    resources:
+      requests:
+        cpu: 25m
+        memory: 32Mi
+      limits:
+        memory: 64Mi
+  webhook:
+    replicas: 2
+    image: quay.io/jetstack/cert-manager-webhook:v1.14.4
+    resources:
+      requests:
+        cpu: 25m
+        memory: 32Mi
+      limits:
+        memory: 64Mi

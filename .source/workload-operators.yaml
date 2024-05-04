@@ -1,0 +1,15 @@
+kind: StandaloneWorkload
+name: platform-operators
+spec:
+  api:
+    clusterScoped: true
+    domain: platform.tbd.io
+    group: deploy
+    kind: PlatformOperators
+    version: v1alpha1
+  companionCliRootcmd:
+    name: platformctl
+    description: Manage the platform configuration
+  resources:
+    - operators/manifests/certificates.yaml
+    - operators/manifests/identity.yaml

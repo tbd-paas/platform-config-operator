@@ -1,9 +1,0 @@
-apiVersion: vendir.k14s.io/v1alpha1
-directories:
-- contents:
-  - git:
-      commitTitle: 'feat: add deployment manifests...'
-      sha: ca84f2d2c9215c365b248ea6bfa2a498e282422e
-    path: .
-  path: certificates/vendor
-kind: LockConfig

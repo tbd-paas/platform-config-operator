@@ -1,0 +1,15 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'refactor: remove nested fields...'
+      sha: 9ba860704f8cc25a415ed7627ddb1871f6b8414b
+    path: .
+  path: operators/vendor/certificates
+- contents:
+  - git:
+      commitTitle: 'fix: correct copy/paste error path...'
+      sha: ce348d8a8f225de6117d6cc48239dae9d8d8a983
+    path: .
+  path: operators/vendor/identity
+kind: LockConfig

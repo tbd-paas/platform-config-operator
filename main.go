@@ -34,8 +34,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	capabilitiesv1alpha1 "github.com/tbd-paas/platform-config-operator/apis/capabilities/v1alpha1"
-	capabilitiescontrollers "github.com/tbd-paas/platform-config-operator/controllers/capabilities"
+	deployv1alpha1 "github.com/tbd-paas/platform-config-operator/apis/deploy/v1alpha1"
+	deploycontrollers "github.com/tbd-paas/platform-config-operator/controllers/deploy"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -52,7 +52,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(capabilitiesv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(deployv1alpha1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -121,7 +121,8 @@ func main() {
 	}
 
 	reconcilers := []ReconcilerInitializer{
-		capabilitiescontrollers.NewPlatformConfigReconciler(mgr),
+		deploycontrollers.NewPlatformOperatorsReconciler(mgr),
+		deploycontrollers.NewPlatformConfigReconciler(mgr),
 		//+kubebuilder:scaffold:reconcilers
 	}
 
