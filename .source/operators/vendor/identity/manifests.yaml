@@ -699,7 +699,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: quay.io/tbd-paas/identity-operator:latest
+        image: quay.io/tbd-paas/identity-operator:v0.0.0-alpha.1
         livenessProbe:
           httpGet:
             path: /healthz

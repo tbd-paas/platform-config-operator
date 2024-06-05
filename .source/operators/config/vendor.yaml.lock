@@ -1,15 +1,11 @@
 apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
-  - git:
-      commitTitle: 'fix: add missing endpoints rbac for checking webhook status...'
-      sha: 1d8f34e2f6ba6c549b3d1d2b16e60c0ef7631df1
+  - http: {}
     path: .
   path: operators/vendor/certificates
 - contents:
-  - git:
-      commitTitle: 'fix: add missing endpoints rbac for checking webhook status...'
-      sha: f733a7f38be3a45d0a0468505ca315bf95fc0ad2
+  - http: {}
     path: .
   path: operators/vendor/identity
 kind: LockConfig

@@ -1151,7 +1151,7 @@ func CreateDeploymentNamespaceIdentityOperatorControllerManager(
 								"command": []interface{}{
 									"/manager",
 								},
-								"image": "quay.io/tbd-paas/identity-operator:latest",
+								"image": "quay.io/tbd-paas/identity-operator:v0.0.0-alpha.1",
 								"livenessProbe": map[string]interface{}{
 									"httpGet": map[string]interface{}{
 										"path": "/healthz",
