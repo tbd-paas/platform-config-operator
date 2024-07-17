@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'chore: add license to managed assets...'
-      sha: e61a2ebe4362ee2cce69e0c06fd014fe5babb822
+      commitTitle: 'fix: remove arm requirement...'
+      sha: 6a3c60ba8ada9bf70328bde9c7e839d894a0785c
       tags:
-      - v0.0.0-alpha.1-1-ge61a2eb
+      - v0.0.0-alpha.2
     path: .
   path: config/vendor/certificates
 - contents:
   - git:
-      commitTitle: 'ci: add release workflow...'
-      sha: ab7956ee075ed02e797f3d994254323a9bf82788
+      commitTitle: 'fix: remove arm requirement...'
+      sha: bfee49d0f89621713788fdacda82a94d97e99a24
       tags:
-      - v0.0.0-alpha.1
+      - v0.0.0-alpha.2
     path: .
   path: config/vendor/identity
 kind: LockConfig
