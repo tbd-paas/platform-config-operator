@@ -573,10 +573,6 @@ metadata:
     capabilities.tbd.io/version: v0.0.1
   name: platform-config-operator-manager-role
 rules:
-- nonResourceURLs:
-  - /metrics
-  verbs:
-  - get
 - apiGroups:
   - acme.cert-manager.io
   resources:
@@ -687,12 +683,6 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
 - apiGroups:
   - authorization.k8s.io
   resources:

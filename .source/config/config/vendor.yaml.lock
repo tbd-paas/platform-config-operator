@@ -2,16 +2,16 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix: remove arm requirement...'
-      sha: 6a3c60ba8ada9bf70328bde9c7e839d894a0785c
+      commitTitle: 'ci: ensure kustomization stays at latest...'
+      sha: 89d806baa19a886cb5e6babb3de77835f220861d
       tags:
       - v0.0.0-alpha.2
     path: .
   path: config/vendor/certificates
 - contents:
   - git:
-      commitTitle: 'fix: remove arm requirement...'
-      sha: bfee49d0f89621713788fdacda82a94d97e99a24
+      commitTitle: 'ci: ensure kustomization stays at latest...'
+      sha: 211aa9dd510c90b51a6958a6e1448d6aed30c847
       tags:
       - v0.0.0-alpha.2
     path: .
