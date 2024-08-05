@@ -2,18 +2,18 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'ci: ensure kustomization stays at latest...'
-      sha: 89d806baa19a886cb5e6babb3de77835f220861d
+      commitTitle: 'feat: adjust common labels...'
+      sha: 7351e4141b7cd46315209d36f8dfe3f6b972d500
       tags:
-      - v0.0.0-alpha.2
+      - v0.0.0-alpha.3
     path: .
   path: config/vendor/certificates
 - contents:
   - git:
-      commitTitle: 'ci: ensure kustomization stays at latest...'
-      sha: 211aa9dd510c90b51a6958a6e1448d6aed30c847
+      commitTitle: 'fix: user nodeAffinity as opposed to node selector...'
+      sha: f5919c69f431f9bacc244cd7d68a1bd78579ba45
       tags:
-      - v0.0.0-alpha.2
+      - v0.0.0-alpha.3
     path: .
   path: config/vendor/identity
 kind: LockConfig
