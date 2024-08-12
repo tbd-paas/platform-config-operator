@@ -97,22 +97,7 @@ func MutateCertManagerConfig(
 	}
 
 	certManager := &certificatesv1alpha1.CertManager{}
-	if certManager.Kind != "CertManager" {
-		certManager.Kind = "CertManager"
-	}
-
-	if certManager.APIVersion != "certificates.platform.tbd.io/v1alpha1" {
-		certManager.APIVersion = "certificates.platform.tbd.io/v1alpha1"
-	}
-
-	if certManager.Namespace != parent.Namespace {
-		certManager.Namespace = parent.Namespace
-	}
-	// Ensure the Name is set
-	if certManager.Name == "" {
-		certManager.Name = "certificaterequests.cert-manager.io" // Set a default name or use a more appropriate naming strategy
-	}
-	err := resources.ToTyped(original, certManager)
+	err := resources.ToTyped(certManager, original)
 	if err != nil {
 		return nil, fmt.Errorf("failed to convert object to CertManager type: %w", err)
 	}
@@ -122,7 +107,13 @@ func MutateCertManagerConfig(
 		return nil, err
 	}
 
-	return []client.Object{certManager}, nil
+	// TODO - remove inefficiency of converting back to unstructured object due to ToTyped conversion not working properly
+	newObject, err := resources.ToUnstructured(certManager)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert CertManager to unstructured object: %w", err)
+	}
+
+	return []client.Object{newObject}, nil
 }
 
 // applyCertManagerConfig checks if s,m,l and pass in appropriate values

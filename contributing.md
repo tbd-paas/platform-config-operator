@@ -1,4 +1,0 @@
-## Debugging
-
-- devle in VScode 
-- 

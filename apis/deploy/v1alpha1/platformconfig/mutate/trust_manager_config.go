@@ -68,17 +68,18 @@ func MutateTrustManagerConfig(
 		return nil, fmt.Errorf("failed to convert object to TrustManager type: %w", err)
 	}
 
-	// trustManager, ok := original.(*certificatesv1alpha1.TrustManager)
-	// if !ok {
-	// 	return nil, fmt.Errorf("original object is not a TrustManager - found  %T", original)
-	// }
-
-	//apply the trustmanager configuration
+	// apply the trustmanager configuration
 	if err := applyTrustManagerConfig(trustManager, parent.Spec.Platform.Identity.DeploymentSize); err != nil {
 		return nil, err
 	}
 
-	return []client.Object{trustManager}, nil
+	// TODO - remove inefficiency of converting back to unstructured object due to ToTyped conversion not working properly
+	newObject, err := resources.ToUnstructured(trustManager)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert CertManager to unstructured object: %w", err)
+	}
+
+	return []client.Object{newObject}, nil
 }
 
 func applyTrustManagerConfig(trustManager *certificatesv1alpha1.TrustManager, deploymentSize string) error {
