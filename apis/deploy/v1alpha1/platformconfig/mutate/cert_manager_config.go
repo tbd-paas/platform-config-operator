@@ -17,11 +17,72 @@ limitations under the License.
 package mutate
 
 import (
-	"sigs.k8s.io/controller-runtime/pkg/client"
+	"fmt"
 
 	"github.com/nukleros/operator-builder-tools/pkg/controller/workload"
+	"github.com/nukleros/operator-builder-tools/pkg/resources"
+	certificatesv1alpha1 "github.com/tbd-paas/capabilities-certificates-operator/apis/certificates/v1alpha1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	deployv1alpha1 "github.com/tbd-paas/platform-config-operator/apis/deploy/v1alpha1"
+)
+
+const (
+	// deployment sizes
+	certManagerSmall  = "small"
+	certManagerMedium = "medium"
+	certManagerLarge  = "large"
+
+	// injector resource requests, limits and replicas
+	certManagersmallInjectorReplicas  = 1
+	certManagermediumInjectorReplicas = 1
+	certManagerlargeInjectorReplicas  = 2
+
+	certManagersmallInjectorCPURequests    = "50m"
+	certManagersmallInjectorMemoryRequests = "64Mi"
+	certManagersmallInjectorMemoryLimits   = "128Mi"
+
+	certManagermediumInjectorCPURequests    = "100m"
+	certManagermediumInjectorMemoryRequests = "128Mi"
+	certManagermediumInjectorMemoryLimits   = "256Mi"
+
+	certManagerlargeInjectorCPURequests    = "150m"
+	certManagerlargeInjectorMemoryRequests = "192Mi"
+	certManagerlargeInjectorMemoryLimits   = "384Mi"
+
+	// controller resource requests, limits and replicas
+	certManagersmallControllerReplicas  = 1
+	certManagermediumControllerReplicas = 1
+	certManagerlargeControllerReplicas  = 2
+
+	certManagersmallControllerCPURequests    = "25m"
+	certManagersmallControllerMemoryRequests = "32Mi"
+	certManagersmallControllerMemoryLimits   = "64Mi"
+
+	certManagermediumControllerCPURequests    = "50m"
+	certManagermediumControllerMemoryRequests = "64Mi"
+	certManagermediumControllerMemoryLimits   = "96Mi"
+
+	certManagerlargeControllerCPURequests    = "50m"
+	certManagerlargeControllerMemoryRequests = "64Mi"
+	certManagerlargeControllerMemoryLimits   = "96Mi"
+
+	// webhook resource requests, limits and replicas
+	certManagersmallWebhookReplicas  = 1
+	certManagermediumWebhookReplicas = 1
+	certManagerlargeWebhookReplicas  = 2
+
+	certManagersmallWebhookCPURequests    = "25m"
+	certManagersmallWebhookMemoryRequests = "32Mi"
+	certManagersmallWebhookMemoryLimits   = "64Mi"
+
+	certManagermediumWebhookCPURequests    = "50m"
+	certManagermediumWebhookMemoryRequests = "64Mi"
+	certManagermediumWebhookMemoryLimits   = "96Mi"
+
+	certManagerlargeWebhookCPURequests    = "50m"
+	certManagerlargeWebhookMemoryRequests = "64Mi"
+	certManagerlargeWebhookMemoryLimits   = "96Mi"
 )
 
 // MutateCertManagerConfig mutates the CertManager resource with name config.
@@ -35,7 +96,86 @@ func MutateCertManagerConfig(
 		return []client.Object{original}, nil
 	}
 
-	// mutation logic goes here
+	certManager := &certificatesv1alpha1.CertManager{}
+	err := resources.ToTyped(certManager, original)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert object to CertManager type: %w", err)
+	}
 
-	return []client.Object{original}, nil
+	// apply the appropriate values to the CertManager resource
+	if err := applyCertManagerConfig(certManager, parent.Spec.Platform.Certificates.DeploymentSize); err != nil {
+		return nil, err
+	}
+
+	// TODO - remove inefficiency of converting back to unstructured object due to ToTyped conversion not working properly
+	newObject, err := resources.ToUnstructured(certManager)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert CertManager to unstructured object: %w", err)
+	}
+
+	return []client.Object{newObject}, nil
+}
+
+// applyCertManagerConfig checks if s,m,l and pass in appropriate values
+func applyCertManagerConfig(certManager *certificatesv1alpha1.CertManager, deploymentSize string) error {
+	switch deploymentSize {
+	case certManagerSmall:
+		// modify injector for small deployment
+		certManager.Spec.Injector.Replicas = certManagersmallInjectorReplicas
+		certManager.Spec.Injector.Resources.Requests.Cpu = certManagersmallInjectorCPURequests
+		certManager.Spec.Injector.Resources.Requests.Memory = certManagersmallInjectorMemoryRequests
+		certManager.Spec.Injector.Resources.Limits.Memory = certManagersmallInjectorMemoryLimits
+
+		// modify controller for small deployment
+		certManager.Spec.Controller.Replicas = certManagersmallControllerReplicas
+		certManager.Spec.Controller.Resources.Requests.Cpu = certManagersmallControllerCPURequests
+		certManager.Spec.Controller.Resources.Requests.Memory = certManagersmallControllerMemoryRequests
+		certManager.Spec.Controller.Resources.Limits.Memory = certManagersmallControllerMemoryLimits
+
+		// modify webhook for small deployment
+		certManager.Spec.Webhook.Replicas = certManagersmallWebhookReplicas
+		certManager.Spec.Webhook.Resources.Requests.Cpu = certManagersmallWebhookCPURequests
+		certManager.Spec.Webhook.Resources.Requests.Memory = certManagersmallWebhookMemoryRequests
+		certManager.Spec.Webhook.Resources.Limits.Memory = certManagersmallWebhookMemoryLimits
+	case certManagerMedium:
+		// modify injector for medium deployment
+		certManager.Spec.Injector.Replicas = certManagermediumInjectorReplicas
+		certManager.Spec.Injector.Resources.Requests.Cpu = certManagermediumInjectorCPURequests
+		certManager.Spec.Injector.Resources.Requests.Memory = certManagermediumInjectorMemoryRequests
+		certManager.Spec.Injector.Resources.Limits.Memory = certManagermediumInjectorMemoryLimits
+
+		// modify controller for medium deployment
+		certManager.Spec.Controller.Replicas = certManagermediumControllerReplicas
+		certManager.Spec.Controller.Resources.Requests.Cpu = certManagermediumControllerCPURequests
+		certManager.Spec.Controller.Resources.Requests.Memory = certManagermediumControllerMemoryRequests
+		certManager.Spec.Controller.Resources.Limits.Memory = certManagermediumControllerMemoryLimits
+
+		// modify webhook for medium deployment
+		certManager.Spec.Webhook.Replicas = certManagermediumWebhookReplicas
+		certManager.Spec.Webhook.Resources.Requests.Cpu = certManagermediumWebhookCPURequests
+		certManager.Spec.Webhook.Resources.Requests.Memory = certManagermediumWebhookMemoryRequests
+		certManager.Spec.Webhook.Resources.Limits.Memory = certManagermediumWebhookMemoryLimits
+	case certManagerLarge:
+		// modify injector for large deployment
+		certManager.Spec.Injector.Replicas = certManagerlargeInjectorReplicas
+		certManager.Spec.Injector.Resources.Requests.Cpu = certManagerlargeInjectorCPURequests
+		certManager.Spec.Injector.Resources.Requests.Memory = certManagerlargeInjectorMemoryRequests
+		certManager.Spec.Injector.Resources.Limits.Memory = certManagerlargeInjectorMemoryLimits
+
+		// modify controller for large deployment
+		certManager.Spec.Controller.Replicas = certManagerlargeControllerReplicas
+		certManager.Spec.Controller.Resources.Requests.Cpu = certManagerlargeControllerCPURequests
+		certManager.Spec.Controller.Resources.Requests.Memory = certManagerlargeControllerMemoryRequests
+		certManager.Spec.Controller.Resources.Limits.Memory = certManagerlargeControllerMemoryLimits
+
+		// modify webhook for large deployment
+		certManager.Spec.Webhook.Replicas = certManagerlargeWebhookReplicas
+		certManager.Spec.Webhook.Resources.Requests.Cpu = certManagerlargeWebhookCPURequests
+		certManager.Spec.Webhook.Resources.Requests.Memory = certManagerlargeWebhookMemoryRequests
+		certManager.Spec.Webhook.Resources.Limits.Memory = certManagerlargeWebhookMemoryLimits
+	default:
+		return fmt.Errorf("invalid deployment size %s", deploymentSize)
+	}
+
+	return nil
 }

@@ -9,7 +9,7 @@ spec:
       deploymentSize: "small"
     identity:
       namespace: "tbd-identity-system"
-      deploymentSize: "small"
+      deploymentSize: "large"
   cloud:
     type: "aws"
     local: true
